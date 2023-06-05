@@ -1,0 +1,15 @@
+<DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <title>FuelPHP Framework</title>
+        {{ asset_css('bootstrap.css') }}
+</head>
+<body>
+    都道府県</br>
+    {% for result in results %}
+        {{result.id}}</br>
+        {{result.name}}</br>
+    {% endfor %}
+</body>
+<html>
