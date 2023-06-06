@@ -1,17 +1,25 @@
-.link-to-post
-    {
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+  
+h1 {
+    font-size: 24px;
+}
+
+.link-to-post {
     position: fixed;
     bottom: 16px;
     right: 16px;
-    }
+}
  
-.link-to-post a
-    {
+.link-to-post a {
     display: block;
     text-decoration: none;
-    }
+}
  
-.link-to-post:hover
-{
+.link-to-post:hover {
     opacity: 0.85 ;
 }
