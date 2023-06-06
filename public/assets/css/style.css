@@ -1,0 +1,17 @@
+.link-to-post
+    {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    }
+ 
+.link-to-post a
+    {
+    display: block;
+    text-decoration: none;
+    }
+ 
+.link-to-post:hover
+{
+    opacity: 0.85 ;
+}

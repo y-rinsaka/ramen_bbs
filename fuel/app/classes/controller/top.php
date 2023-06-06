@@ -5,7 +5,7 @@ class Controller_Top extends Controller
     {
         $query= DB::select()->from('prefectures');
         $results=$query->execute();
-    
+
         $view= 'top';
         $twig= View_Twig::forge($view);
         $presenter= Presenter::forge($view, 'view', null, $twig);
