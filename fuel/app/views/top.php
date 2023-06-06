@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{ asset_css('bootstrap.css') }}
-    {{ asset_css('style.css')}}
-    <title>最新の投稿</title>
+    <?php echo Asset::css(array('style.css', 'bootstrap.css')); ?>
+    <title><?php echo $title; ?></title>
 </head>
 <body>
     <header>
@@ -14,7 +13,7 @@
     </header>
     <p class="link-to-post">
         <a href="makePost">
-            <img src="{{ publicPath ~ 'assets/img/link-to-post.png' }}" alt="投稿する">
+            <?php echo Asset::img('link-to-post.png'); ?>
         </a>
     </p>
 </body>

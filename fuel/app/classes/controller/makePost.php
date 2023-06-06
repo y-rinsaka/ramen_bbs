@@ -4,17 +4,11 @@ class Controller_MakePost extends Controller
 {
     public function action_index()
     {
+        $data = array();
+		$data['title'] = '新規の投稿';
+        $view = View::forge('makePost', $data);
 
-        $query= DB::select()->from('prefectures');
-        $results=$query->execute();
-
-        $view= 'makePost';
-        $twig= View_Twig::forge($view);
-        $presenter= Presenter::forge($view, 'view', null, $twig);
-        $presenter-> set('results', $results);
-    
-        return Response::forge($presenter);
-
+        return $view;
     }
 }
 

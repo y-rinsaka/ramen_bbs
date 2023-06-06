@@ -3,16 +3,11 @@ class Controller_Top extends Controller
 {
     public function action_index()
     {
-        $query= DB::select()->from('prefectures');
-        $results=$query->execute();
+        $data = array();
+		$data['title'] = '新規の投稿';
 
-        $view= 'top';
-        $twig= View_Twig::forge($view);
-        $presenter= Presenter::forge($view, 'view', null, $twig);
-        $presenter-> set('results', $results);
-    
-        return Response::forge($presenter);
-
+		//assign the view to browser output
+		return View::forge('top', $data);
     }
 }
 
