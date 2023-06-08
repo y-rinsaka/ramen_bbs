@@ -12,7 +12,7 @@
         <h1>最新の投稿</h1>
     </header>
     <p class="link-to-post">
-        <a href="makePost">
+        <a href="create">
             <?php echo Asset::img('link-to-post.png'); ?>
         </a>
     </p>
