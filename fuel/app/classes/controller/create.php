@@ -1,6 +1,6 @@
 
 <?php
-class Controller_MakePost extends Controller
+class Controller_Create extends Controller
 
 {
     public function action_index()
@@ -66,7 +66,7 @@ class Controller_MakePost extends Controller
         $data = array();
 		$data['title'] = '新規の投稿';
 
-        return View::forge('makePost', $data);
+        return View::forge('create', $data);
     }
 
     public function action_success()
