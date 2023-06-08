@@ -5,9 +5,8 @@ class Controller_Top extends Controller
     {
         $data = array();
 		$data['title'] = '新規の投稿';
-
-		//assign the view to browser output
+        
 		return View::forge('top', $data);
     }
 }
-
+?>

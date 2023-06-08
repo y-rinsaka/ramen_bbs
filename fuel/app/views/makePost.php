@@ -11,7 +11,37 @@
     <header>
         <h1><?php echo $title; ?></h1>
     </header>
-    <?php echo $form ?>
-    
+    <form method="POST" action="" enctype="multipart/form-data">
+        <label for="shop_name">店名</label>
+        <input type="url" name="shop_name" id="shop_name" required>
+        <br/>
+        <label for="shop_url">URL</label>
+        <input type="url" name="shop_url" id="shop_url" required>
+        <br>
+        <label for="prefecture">都道府県</label>
+        <select name="prefecture" id="prefecture" required>
+            <option value="">選択してください</option>
+            <!-- 他の都道府県のオプションを追加 -->
+        </select>
+        <br>
+        <label for="score">評価:</label>
+        <br>
+        <input type="radio" name="score" value="1" required> 1
+        <input type="radio" name="score" value="2"> 2
+        <input type="radio" name="score" value="3"> 3
+        <input type="radio" name="score" value="4"> 4
+        <input type="radio" name="score" value="5" checked> 5
+        <br>
+        <label for="content">コメント</label>
+        <textarea name="content" id="content"></textarea>
+        <br>
+        <label for="image">画像</label>
+        <input type="file" name="image" accept="image/*">
+        <br>
+        <input type="submit" value="投稿する" />
+
+    </form>
+
+
 </body>
 </html>
