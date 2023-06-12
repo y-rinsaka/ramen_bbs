@@ -27,6 +27,16 @@ class Controller_Welcome extends Controller
 	 * @access  public
 	 * @return  Response
 	 */
+	public function before() {
+
+		// 未ログイン時、ログインページへリダイレクト
+		if (!Auth::check()) {
+		
+			Response::redirect('/login');
+		
+		}
+		
+	}
 	public function action_index()
 	{
 		return Response::forge(View::forge('welcome/index'));

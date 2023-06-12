@@ -10,6 +10,7 @@
 <body>
     <header>
         <h1>最新の投稿</h1>
+        <a href="logout" class="logout-link">ログアウト</a>
     </header>
     <p class="link-to-post">
         <a href="create">

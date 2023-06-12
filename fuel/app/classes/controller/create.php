@@ -3,6 +3,12 @@
 class Controller_Create extends Controller
 
 {
+    public function before() {
+		// 未ログイン時、ログインページへリダイレクト
+		if (!Auth::check()) {
+			Response::redirect('/login');
+        }
+	}
     public function action_index()
     {   
         if (Input::method() == 'POST') {
