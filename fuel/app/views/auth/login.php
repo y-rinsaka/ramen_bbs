@@ -33,12 +33,15 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-offset-4 col-sm-8">
+				<div class="d-grid gap-2 d-md-block col-sm-offset-4 col-sm-8">
+					<a href="/register" class="btn btn-primary" role="button" data-bs-toggle="button">新規登録</a>
 					<?php echo Form::submit('submit', 'ログイン', array('class' => 'btn btn-success'));?>
 				</div>
 			</div>
 			<?php echo Form::close();?>
 		</div>
 	</div>
+
+	
 </body>
 </html>
