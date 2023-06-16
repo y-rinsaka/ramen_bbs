@@ -15,6 +15,7 @@ require COREPATH.'bootstrap.php';
 
 // Add framework overload classes here
 \Autoloader::add_classes(array(
+	'Model_RamenPost' => APPPATH.'classes/model/ramen_post.php',
 	// Example: 'View' => APPPATH.'classes/myview.php',
 ));
 

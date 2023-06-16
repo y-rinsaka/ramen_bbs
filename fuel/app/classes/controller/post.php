@@ -1,7 +1,6 @@
 
 <?php
-class Controller_Create extends Controller
-
+class Controller_Post extends Controller
 {
     public function before() {
 		// 未ログイン時、ログインページへリダイレクト
@@ -9,21 +8,30 @@ class Controller_Create extends Controller
 			Response::redirect('/login');
         }
 	}
-    public function action_index()
+
+    public function action_create()
+    {
+        $data = array();
+        $data['title'] = "投稿する";
+        return View::forge('post/create', $data);
+    }
+
+    public function action_save()
     {   
         if (Input::method() == 'POST') {
             // フォームデータの取得
-            // $userId = Auth::get('id');
-            // $prefectureId = Input::post('prefecture_id');
-            $shopName = Input::post('shop_name');
-            $shopUrl = Input::post('shop_url');
-            $score = Input::post('score');
-            $comment = Input::post('comment');
+            $form = array();
+            $form['user_id'] = Auth::get('id');
+            $form['prefecture_id'] = Input::post('prefecture_id');
+            $form['shop_name'] = Input::post('shop_name');
+            $form['shop_url'] = Input::post('shop_url');
+            $form['score'] = Input::post('score');
+            $form['comment'] = Input::post('comment');
             // 画像のアップロード
             $image = Input::file('image');
             $imagePath = '';
 
-            if ($image && $image['tmp_name']) {
+            if ($image && $image['name']) {
                 $uploadDir = DOCROOT . 'uploads/';
                 $imageName = $this->generateUniqueFileName($image['name']);
                 $imagePath = $uploadDir . $imageName;
@@ -42,43 +50,26 @@ class Controller_Create extends Controller
                 $imagePath = DOCROOT . 'assets/img/no_image.jpg';
             }
 
+            $form['image'] = $imagePath;
             // 新しいPostモデルインスタンスを作成し、値を設定
-            $post = new Model_RamenPost();
-            // $post->user_id = $userId;
-            // $post->prefecture_id = $prefectureId;
-            $post->shop_name = $shopName;
-            $post->shop_url = $shopUrl;
-            $post->score = $score;
-            $post->comment = $comment;
-            $post->image_path = $imagePath;
-
-
+            $ramen_post = Model_RamenPost::forge(); //Model_RamenPostクラスのオブジェクトを作成
+            $ramen_post->set($form); //setメソッドで、配列をramen_postオブジェクトに設定
+            
             try {
                 // データベースに保存
-                $post->save();
+                $result = $ramen_post->save();
 
                 // 成功メッセージを表示
                 Session::set_flash('success', '投稿が正常に保存されました');
 
-                // 投稿後にリダイレクトなどの処理を行う
-                Response::redirect('/top');
+                Response::redirect('/');
             } catch (Exception $e) {
                 // エラーメッセージを表示
-                Session::set_flash('error', 'データの保存中にエラーが発生しました');
+                Session::set_flash('error', $e->getMessage());
             }
         }
 
-        // フォームのビューを表示
-        $data = array();
-		$data['title'] = '新規の投稿';
-
-        return View::forge('create', $data);
-    }
-
-    public function action_success()
-    {
-        // 成功メッセージのビューを表示
-        // return View::forge('post/success');
+        Response::redirect('post');
     }
 
     // ユニークなファイル名を生成するメソッド
@@ -87,6 +78,16 @@ class Controller_Create extends Controller
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $uniqueName = uniqid() . '.' . $extension;
         return $uniqueName;
+    }
+
+    public function action_index(){
+
+        $data = array();
+        $data['title'] = '新規投稿';
+        $data['rows'] = Model_RamenPost::find_all();
+
+        return View::forge('post/top',$data);
+
     }
 }
 
