@@ -10,37 +10,32 @@
 <body>
 	<header>
         <h1><?php echo $title; ?></h1>
-        <a href="logout" class="logout-link">ログアウト</a>
     </header>
-	<div class="container">
-		<div class="row">
-			<?php echo Form::open(array('class' => 'form-horizontal'));?>
-			<?php if (isset($error)): ?>
-			<p class="alert alert-warning">
-				<?php echo $error ?>
-			</p>
-			<?php endif ?>
-			<div class="form-group">
-				<label for="form_name" class="col-sm-4 control-label">ユーザ名</label>
-				<div class="col-sm-8">
-					<?php echo Form::input('username');?>
+	<main>
+		<div class="container">
+			<div class="row text-center">
+				<?php echo Form::open(array('class' => 'form-horizontal'));?>
+				<?php if (isset($error)): ?>
+				<p class="alert alert-warning">
+					<?php echo $error ?>
+				</p>
+				<?php endif ?>
+				<div class="form-group">
+						<?php echo Form::input('username', null, ['placeholder' => 'ユーザー名']);?>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="form_name" class="col-sm-4 control-label">パスワード</label>
-				<div class="col-sm-8">
-					<?php echo Form::password('password');?>
+				<div class="form-group">
+
+						<?php echo Form::password('password', null, ['placeholder' => 'パスワード']);?>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="d-grid gap-2 d-md-block col-sm-offset-4 col-sm-8">
-					<a href="/register" class="btn btn-primary" role="button" data-bs-toggle="button">新規登録</a>
-					<?php echo Form::submit('submit', 'ログイン', array('class' => 'btn btn-success'));?>
+				<div class="form-group">
+					<a href="/register" class="btn btn-default" role="button" data-bs-toggle="button">新規登録</a>
+					<?php echo Form::submit('submit', 'ログイン', array('class' => 'btn btn-primary'));?>
 				</div>
+				<?php echo Form::close();?>
 			</div>
-			<?php echo Form::close();?>
 		</div>
-	</div>
+	</main>
+
 
 	
 </body>
