@@ -10,6 +10,7 @@
 <body>
     <header>
         <h1><?php echo $title; ?></h1>
+        <a href="logout" class="logout-link">ログアウト</a>
     </header>
     <form method="POST" action="" enctype="multipart/form-data">
         <label for="shop_name">店名</label>
