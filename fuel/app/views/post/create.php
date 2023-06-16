@@ -12,16 +12,17 @@
         <h1><?php echo $title; ?></h1>
         <a href="logout" class="logout-link">ログアウト</a>
     </header>
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="/post/save" enctype="multipart/form-data">
         <label for="shop_name">店名</label>
-        <input type="url" name="shop_name" id="shop_name" required>
+        <input type="text" name="shop_name" id="shop_name" required>
         <br/>
         <label for="shop_url">URL</label>
         <input type="url" name="shop_url" id="shop_url" required>
         <br>
         <label for="prefecture">都道府県</label>
-        <select name="prefecture" id="prefecture" required>
+        <select name="prefecture_id" id="prefecture_id" required>
             <option value="">選択してください</option>
+            <option value="1">北海道</option>
             <!-- 他の都道府県のオプションを追加 -->
         </select>
         <br>
