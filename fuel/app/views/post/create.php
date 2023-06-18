@@ -1,3 +1,4 @@
+<?php require APPPATH . 'classes/prefectures.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,11 +20,12 @@
         <label for="shop_url">URL</label>
         <input type="url" name="shop_url" id="shop_url" required>
         <br>
-        <label for="prefecture">都道府県</label>
+        <label for="prefecuter_id">都道府県</label>
         <select name="prefecture_id" id="prefecture_id" required>
-            <option value="">選択してください</option>
-            <option value="1">北海道</option>
-            <!-- 他の都道府県のオプションを追加 -->
+            <option value="">未選択</option>
+            <?php foreach ($prefectures as $code => $prefecture): ?>
+                <option value="<?php echo $code; ?>"><?php echo $prefecture; ?></option>
+            <?php endforeach; ?>
         </select>
         <br>
         <label for="score">評価:</label>
