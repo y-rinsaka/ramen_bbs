@@ -1,5 +1,6 @@
 
 <?php
+use Fuel\Core\DB;
 class Controller_Post extends Controller
 {
     public function before() {
@@ -32,22 +33,22 @@ class Controller_Post extends Controller
             $imagePath = '';
 
             if ($image && $image['name']) {
-                $uploadDir = DOCROOT . 'uploads/';
+                $uploadDir = DOCROOT . 'assets/uploads/';
                 $imageName = $this->generateUniqueFileName($image['name']);
-                $imagePath = $uploadDir . $imageName;
+                $imagePath = '/assets/uploads/' . $imageName;
 
                 // 画像ファイルであることを確認
                 $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
                 $fileExtension = pathinfo($imageName, PATHINFO_EXTENSION);
                 if (in_array(strtolower($fileExtension), $allowedExtensions)) {
-                    move_uploaded_file($image['tmp_name'], $imagePath);
+                    move_uploaded_file($image['tmp_name'], DOCROOT . $imagePath);
                 } else {
                     // エラーメッセージを表示
                     Session::set_flash('error', '無効なファイル形式です。画像ファイルを選択してください。');
                 }
             } else {
                 // 画像がアップロードされていない場合はデフォルトの画像パスを設定
-                $imagePath = DOCROOT . 'assets/img/no_image.jpg';
+                $imagePath = '/assets/img/no_image.jpg';
             }
 
             $form['image'] = $imagePath;
@@ -81,14 +82,32 @@ class Controller_Post extends Controller
     }
 
     public function action_index(){
+        $ramen_posts = Model_RamenPost::find_all();
 
         $data = array();
         $data['title'] = '新規投稿';
-        $data['rows'] = Model_RamenPost::find_all();
+        $data['ramen_posts'] = $ramen_posts;
+        $data['users'] = $this->getUserNames($ramen_posts);
 
         return View::forge('post/top',$data);
 
     }
+
+    protected function getUserNames($ramen_posts)
+    {
+        $userIds = array_column($ramen_posts, 'user_id');
+        $query = DB::select('id', 'username')->from('users')->where('id', 'IN', $userIds)->execute();
+        $result = $query->as_array();
+
+        $users = array();
+        foreach ($result as $row) {
+            $users[$row['id']] = $row['username'];
+        }
+
+        return $users;
+    }
+
+    
 }
 
 ?>
