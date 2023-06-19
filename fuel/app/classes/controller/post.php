@@ -1,6 +1,5 @@
 
 <?php
-use Fuel\Core\DB;
 class Controller_Post extends Controller
 {
     public function before() {
@@ -88,7 +87,12 @@ class Controller_Post extends Controller
         $data['title'] = '新規投稿';
         $data['ramen_posts'] = $ramen_posts;
         $data['users'] = $this->getUserNames($ramen_posts);
+        foreach ($ramen_posts as &$ramen_post) {
+            if ($ramen_post->comment) {
+                $ramen_post->comment = $this->truncateComment($ramen_post->comment, 10);
+            }
 
+        }
         return View::forge('post/top',$data);
 
     }
@@ -98,15 +102,25 @@ class Controller_Post extends Controller
         $userIds = array_column($ramen_posts, 'user_id');
         $query = DB::select('id', 'username')->from('users')->where('id', 'IN', $userIds)->execute();
         $result = $query->as_array();
-
+    
         $users = array();
         foreach ($result as $row) {
             $users[$row['id']] = $row['username'];
         }
-
+    
         return $users;
     }
 
+    public function truncateComment($comment, $length)
+    {
+        if (mb_strlen($comment) > $length) {
+            $truncated = mb_substr($comment, 0, $length) . '...';
+        } else {
+            $truncated = $comment;
+        }
+    
+        return $truncated;
+    }
     
 }
 

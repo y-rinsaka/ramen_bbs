@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <h2 class="card-title"><?php echo $ramen_post->shop_name; ?></h5>
                     <h3>@<?php echo $users[$ramen_post->user_id]; ?></h3>
-                    <p class="card-text"><?php echo $ramen_post->comment; ?></p>
+                    <p class="card-text"></p><?php echo $ramen_post->comment ?></p>
                     <a href="#" class="btn btn-primary">詳細</a>
                 </div>
             </div>
