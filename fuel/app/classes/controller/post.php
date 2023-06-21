@@ -111,7 +111,7 @@ class Controller_Post extends Controller
         return $users;
     }
 
-    public function truncateComment($comment, $length)
+    protected function truncateComment($comment, $length)
     {
         if (mb_strlen($comment) > $length) {
             $truncated = mb_substr($comment, 0, $length) . '...';
@@ -121,7 +121,6 @@ class Controller_Post extends Controller
     
         return $truncated;
     }
-    
 }
 
 ?>
