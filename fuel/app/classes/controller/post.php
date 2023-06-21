@@ -80,7 +80,8 @@ class Controller_Post extends Controller
         return $uniqueName;
     }
 
-    public function action_index(){
+    public function action_index()
+    {
         $ramen_posts = Model_RamenPost::find_all();
 
         $data = array();
@@ -95,6 +96,19 @@ class Controller_Post extends Controller
         }
         return View::forge('post/top',$data);
 
+    }
+
+    public function action_view($id)
+    {
+        $ramen_post = Model_RamenPost::find_by_pk($id);
+        $data['title'] = '詳細';
+        $data['ramen_post'] = $ramen_post;
+
+        $query = DB::select('username')->from('users')->where('id', $ramen_post->user_id);
+        $result = $query->execute()->as_array();
+        $data['ramen_post']['username'] = $result[0]['username'];
+
+        return View::forge('post/view', $data);
     }
 
     protected function getUserNames($ramen_posts)
