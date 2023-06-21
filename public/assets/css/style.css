@@ -26,3 +26,16 @@ h1 {
 .link-to-post:hover {
     opacity: 0.85 ;
 }
+
+.card {
+    width: 36rem;
+    margin: 20px auto; /* ページの中央に寄せるためのマージン */
+    border: 1px solid #ccc; /* 枠線のスタイル */
+    padding: 10px; /* カードの内側の余白 */
+    text-align: center;
+}
+
+.card-img-top {
+    width: 200px;
+    height: 150px;
+}

@@ -36,8 +36,8 @@
         <input type="radio" name="score" value="4"> 4
         <input type="radio" name="score" value="5" checked> 5
         <br>
-        <label for="content">コメント</label>
-        <textarea name="content" id="content"></textarea>
+        <label for="comment">コメント</label>
+        <textarea name="comment" id="comment"></textarea>
         <br>
         <label for="image">画像</label>
         <input type="file" name="image" accept="image/*">
