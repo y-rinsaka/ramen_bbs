@@ -107,7 +107,6 @@ class Controller_Post extends Controller
         $query = DB::select('username')->from('users')->where('id', $ramen_post->user_id);
         $result = $query->execute()->as_array();
         $data['ramen_post']['username'] = $result[0]['username'];
-
         return View::forge('post/view', $data);
     }
 
