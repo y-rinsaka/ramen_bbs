@@ -8,10 +8,8 @@
     <title><?php echo $title; ?></title>
 </head>
 <body>
-    <header>
-        <h1><?php echo $title; ?></h1>
-        <a href="/logout" class="logout-link">ログアウト</a>
-    </header>
+    <div id="root"></div>
+    <script src="/assets/dist/app.js" charset="utf-8"></script>
     <main>
         <div class="card">
             <img src="<?php echo $ramen_post->image; ?>" class="card-img-top">
