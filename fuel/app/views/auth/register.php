@@ -15,6 +15,11 @@
         <div class="container">
             <div class="row">
                     <?php echo Form::open(['action' => 'register/index', 'method' => 'post', 'class' => 'form-horizontal']); ?>
+                    <?php if (isset($error)): ?>
+                    <p class="alert alert-warning">
+                        <?php echo $error ?>
+                    </p>
+                    <?php endif ?>
                     <div class="text-center">
                         <div class="form-group">
                                 <?php echo Form::input('username', null, ['id' => 'username', 'placeholder' => 'ユーザ名']); ?>

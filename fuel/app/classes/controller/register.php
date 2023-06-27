@@ -10,10 +10,10 @@ public function action_index()
       || empty(Input::post('email'))
     )
     {
-      Session::set_flash('message', '入力は全て必須です');
+      Session::set_flash('error', '入力は全て必須です');
       $data["subnav"] = array('register'=> 'active' );
-    
-      return View::forge('auth/register', $data);
+      $view = View::forge('auth/register', $data);
+      return $view;
     }
 
     try {
@@ -21,12 +21,13 @@ public function action_index()
         Input::post('username'),
         Input::post('password'),
         Input::post('email'),
-        1
+        
       );
     } catch (Exception $e) {
-      Session::set_flash('message', 'そのユーザーは登録できません');
+      Session::set_flash('error', 'そのユーザーは登録できません');
       $data["subnav"] = array('register'=> 'active' );
-      return View::forge('auth/register', $data);
+      $view = View::forge('auth/register', $data);
+      return $view;
     }
     Response::redirect('/');
   }
