@@ -8,6 +8,7 @@ header {
 main {
     margin-top: 20px;
 }
+
 h1 {
     font-size: 24px;
 }
@@ -43,4 +44,33 @@ h1 {
 .card-img-external-link {
     width: 20px;
     height: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+  
+.cell-gray {
+    flex: 0.1;
+    aspect-ratio: 1/1;
+    background-color: #ccc;
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    font-size: 16px;
+    border: 1px solid black;
+}
+  
+.cell-green {
+    flex: 0.1;
+    aspect-ratio: 1/1;
+    background-color: green;
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    font-size: 16px;
+    border: 1px solid black;
 }
