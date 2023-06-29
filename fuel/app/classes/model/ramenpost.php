@@ -1,5 +1,6 @@
-<?php 
-class Model_RamenPost extends \Model_Crud{
+<?php
+namespace Model;
+class RamenPost extends \Model_Crud{
     protected static $_table_name = 'ramen_posts';
     protected static $_primary_key = 'id';
     protected static $_properties = array(

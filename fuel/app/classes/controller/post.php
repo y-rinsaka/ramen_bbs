@@ -52,7 +52,7 @@ class Controller_Post extends Controller
 
             $form['image'] = $imagePath;
             // 新しいPostモデルインスタンスを作成し、値を設定
-            $ramen_post = Model_RamenPost::forge(); //Model_RamenPostクラスのオブジェクトを作成
+            $ramen_post = \Model\RamenPost::forge(); //Model_RamenPostクラスのオブジェクトを作成
             $ramen_post->set($form); //setメソッドで、配列をramen_postオブジェクトに設定
             
             try {
@@ -82,7 +82,7 @@ class Controller_Post extends Controller
 
     public function action_index()
     {
-        $ramen_posts = Model_RamenPost::find_all();
+        $ramen_posts = \Model\RamenPost::find_all();
 
         $data = array();
         $data['title'] = '新規投稿';
@@ -100,7 +100,7 @@ class Controller_Post extends Controller
 
     public function action_view($id)
     {
-        $ramen_post = Model_RamenPost::find_by_pk($id);
+        $ramen_post = \Model\RamenPost::find_by_pk($id);
         $data['title'] = '詳細';
         $data['ramen_post'] = $ramen_post;
 
