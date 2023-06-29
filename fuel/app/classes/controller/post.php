@@ -47,26 +47,7 @@ class Post extends \Controller
             $form['comment'] = \Input::post('comment');
             // 画像のアップロード
             $image = \Input::file('image');
-            $imagePath = '';
-
-            if ($image && $image['name']) {
-                $uploadDir = DOCROOT . 'assets/uploads/';
-                $imageName = $this->generateUniqueFileName($image['name']);
-                $imagePath = '/assets/uploads/' . $imageName;
-
-                // 画像ファイルであることを確認
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                $fileExtension = pathinfo($imageName, PATHINFO_EXTENSION);
-                if (in_array(strtolower($fileExtension), $allowedExtensions)) {
-                    move_uploaded_file($image['tmp_name'], DOCROOT . $imagePath);
-                } else {
-                    // エラーメッセージを表示
-                    \Session::set_flash('error', '無効なファイル形式です。画像ファイルを選択してください。');
-                }
-            } else {
-                // 画像がアップロードされていない場合はデフォルトの画像パスを設定
-                $imagePath = '/assets/img/no_image.jpg';
-            }
+            $imagePath = $this->uploadImage($image);
 
             $form['image'] = $imagePath;
             // 新しいPostモデルインスタンスを作成し、値を設定
@@ -90,26 +71,78 @@ class Post extends \Controller
         \Response::redirect('post');
     }
 
-    // ユニークなファイル名を生成するメソッド
-    private function generateUniqueFileName($filename)
-    {
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $uniqueName = uniqid() . '.' . $extension;
-        return $uniqueName;
-    }
-
     public function action_view($id)
     {
-        $ramen_post = \Model\RamenPost::find_by_pk($id);
         $data['title'] = '詳細';
-        $data['current_user_id'] = \Auth::get('id');
-        $data['ramen_post'] = $ramen_post;
 
+        // ログインユーザーのIDを取得し、投稿のユーザーIDと一致したものだけが編集・削除できるようにする
+        $data['current_user_id'] = \Auth::get('id');
+
+        $ramen_post = \Model\RamenPost::find_by_pk($id);
+        $data['ramen_post'] = $ramen_post;
         $query = \DB::select('username')->from('users')->where('id', $ramen_post->user_id);
         $result = $query->execute()->as_array();
         $data['ramen_post']['username'] = $result[0]['username'];
         return \View::forge('post/view', $data);
-    
+
+    }
+
+    public function action_edit($id)
+    {
+        // 編集対象のPostを取得
+        $ramen_post = \Model\RamenPost::find_by_pk($id);
+        $data['ramen_post'] = $ramen_post;
+
+        $data['title'] = "編集する";
+
+        // 自分のPostであるか確認
+        if ($ramen_post && $ramen_post->user_id == \Auth::get('id')) {
+            // 編集フォームを表示するビューを返す
+            return \View::forge('post/edit', $data);
+        } else {
+            // 編集権限がない場合はリダイレクト
+            \Session::set_flash('error', 'この投稿は編集できません。');
+            \Response::redirect('/');
+        }
+    }
+
+    public function post_update($id)
+    {
+        // 更新対象のPostを取得
+        $ramen_post = \Model\RamenPost::find_by_pk($id);
+        if (!$ramen_post) {
+            // 投稿が存在しない場合の処理
+            \Session::set_flash('error', '指定された投稿は存在しません');
+            \Response::redirect('/');
+        }
+        if (\Input::method() == 'POST') {
+            // 自分のPostであるか確認
+            if ($ramen_post && $ramen_post->user_id == \Auth::get('id')) {
+                // 値の更新
+                $ramen_post->prefecture_id = \Input::post('prefecture_id');
+                $ramen_post->shop_name = \Input::post('shop_name');
+                $ramen_post->shop_url = \Input::post('shop_url');
+                $ramen_post->score = \Input::post('score');
+                $ramen_post->comment = \Input::post('comment');
+
+                $image = \Input::file('image');
+                $imagePath = $this->uploadImage($image);
+                $ramen_post->image = $imagePath;
+                try {
+                    // 投稿を保存
+                    $ramen_post->is_new(false);
+                    $ramen_post->save();
+                    // 成功メッセージを表示
+                    \Session::set_flash('success', '投稿が正常に更新されました');
+            
+                    \Response::redirect('/');
+                } catch (\Exception $e) {
+                    // エラーメッセージを表示
+                    \Session::set_flash('error', $e->getMessage());
+                    \Response::redirect('/');
+                }
+            }
+        }
     }
 
     public function post_delete($id)
@@ -128,6 +161,39 @@ class Post extends \Controller
         }
 
         \Response::redirect('/');
+    }
+
+    private function uploadImage($image)
+    {
+        $imagePath = '';
+
+        if ($image && $image['name']) {
+            $uploadDir = DOCROOT . 'assets/uploads/';
+            $imageName = $this->generateUniqueFileName($image['name']);
+            $imagePath = '/assets/uploads/' . $imageName;
+
+            // 画像ファイルであることを確認
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            $fileExtension = pathinfo($imageName, PATHINFO_EXTENSION);
+            if (in_array(strtolower($fileExtension), $allowedExtensions)) {
+                move_uploaded_file($image['tmp_name'], DOCROOT . $imagePath);
+            } else {
+                // エラーメッセージを表示
+                \Session::set_flash('error', '無効なファイル形式です。画像ファイルを選択してください。');
+            }
+        } else {
+            // 画像がアップロードされていない場合はデフォルトの画像パスを設定
+            $imagePath = '/assets/img/no_image.jpg';
+        }
+
+        return $imagePath;
+    }
+
+    private function generateUniqueFileName($filename)
+    {
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $uniqueName = uniqid() . '.' . $extension;
+        return $uniqueName;
     }
 
     protected function getUserNames($ramen_posts)

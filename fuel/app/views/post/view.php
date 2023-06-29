@@ -21,12 +21,15 @@
                 <p class="card-text">投稿日：<?php echo $ramen_post->created_at ?></p>
 
             <?php if ($ramen_post->user_id == $current_user_id): ?>
-                <form action="<?php echo Uri::create('post/delete/'.$ramen_post->id); ?>" method="post" >
+                <form action="<?php echo Uri::create('post/edit/' . $ramen_post->id); ?>" method="post" >
+                    <input type="submit" value="編集" class="btn btn-success">
+                </form>
+                <form action="<?php echo Uri::create('post/delete/' . $ramen_post->id); ?>" method="post" >
                     <input type="hidden" name="<?php echo Config::get('security.csrf_token_key'); ?>" value="<?php echo Security::fetch_token(); ?>">
                     <input type="submit" value="削除" class="btn btn-danger">
                 </form>
             <?php endif; ?>
-            
+
             </div>
         </div>
 
