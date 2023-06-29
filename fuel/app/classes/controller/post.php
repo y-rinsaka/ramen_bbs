@@ -1,11 +1,11 @@
-
 <?php
-class Controller_Post extends Controller
+namespace Controller;
+class Post extends \Controller
 {
     public function before() {
 		// 未ログイン時、ログインページへリダイレクト
-		if (!Auth::check()) {
-			Response::redirect('/login');
+		if (!\Auth::check()) {
+			\Response::redirect('/login');
         }
 	}
 
@@ -13,22 +13,22 @@ class Controller_Post extends Controller
     {
         $data = array();
         $data['title'] = "投稿する";
-        return View::forge('post/create', $data);
+        return \View::forge('post/create', $data);
     }
 
     public function action_save()
     {   
-        if (Input::method() == 'POST') {
+        if (\Input::method() == 'POST') {
             // フォームデータの取得
             $form = array();
-            $form['user_id'] = Auth::get('id');
-            $form['prefecture_id'] = Input::post('prefecture_id');
-            $form['shop_name'] = Input::post('shop_name');
-            $form['shop_url'] = Input::post('shop_url');
-            $form['score'] = Input::post('score');
-            $form['comment'] = Input::post('comment');
+            $form['user_id'] = \Auth::get('id');
+            $form['prefecture_id'] = \Input::post('prefecture_id');
+            $form['shop_name'] = \Input::post('shop_name');
+            $form['shop_url'] = \Input::post('shop_url');
+            $form['score'] = \Input::post('score');
+            $form['comment'] = \Input::post('comment');
             // 画像のアップロード
-            $image = Input::file('image');
+            $image = \Input::file('image');
             $imagePath = '';
 
             if ($image && $image['name']) {
@@ -43,7 +43,7 @@ class Controller_Post extends Controller
                     move_uploaded_file($image['tmp_name'], DOCROOT . $imagePath);
                 } else {
                     // エラーメッセージを表示
-                    Session::set_flash('error', '無効なファイル形式です。画像ファイルを選択してください。');
+                    \Session::set_flash('error', '無効なファイル形式です。画像ファイルを選択してください。');
                 }
             } else {
                 // 画像がアップロードされていない場合はデフォルトの画像パスを設定
@@ -60,16 +60,16 @@ class Controller_Post extends Controller
                 $result = $ramen_post->save();
 
                 // 成功メッセージを表示
-                Session::set_flash('success', '投稿が正常に保存されました');
+                \Session::set_flash('success', '投稿が正常に保存されました');
 
-                Response::redirect('/');
+                \Response::redirect('/');
             } catch (Exception $e) {
                 // エラーメッセージを表示
-                Session::set_flash('error', $e->getMessage());
+                \Session::set_flash('error', $e->getMessage());
             }
         }
 
-        Response::redirect('post');
+        \Response::redirect('post');
     }
 
     // ユニークなファイル名を生成するメソッド
@@ -94,7 +94,7 @@ class Controller_Post extends Controller
             }
 
         }
-        return View::forge('post/top',$data);
+        return \View::forge('post/top',$data);
 
     }
 
@@ -104,16 +104,16 @@ class Controller_Post extends Controller
         $data['title'] = '詳細';
         $data['ramen_post'] = $ramen_post;
 
-        $query = DB::select('username')->from('users')->where('id', $ramen_post->user_id);
+        $query = \DB::select('username')->from('users')->where('id', $ramen_post->user_id);
         $result = $query->execute()->as_array();
         $data['ramen_post']['username'] = $result[0]['username'];
-        return View::forge('post/view', $data);
+        return \View::forge('post/view', $data);
     }
 
     protected function getUserNames($ramen_posts)
     {
         $userIds = array_column($ramen_posts, 'user_id');
-        $query = DB::select('id', 'username')->from('users')->where('id', 'IN', $userIds)->execute();
+        $query = \DB::select('id', 'username')->from('users')->where('id', 'IN', $userIds)->execute();
         $result = $query->as_array();
     
         $users = array();

@@ -1,12 +1,17 @@
 <?php
-
-class Controller_User extends Controller
+namespace Controller;
+class User extends \Controller
 {
-
+    public function before() {
+		// 未ログイン時、ログインページへリダイレクト
+		if (!\Auth::check()) {
+			\Response::redirect('/login');
+        }
+	}
 	public function action_index($user_id)
 	{  
         // user_id に対応するユーザー情報の取得
-        $query = DB::select('username', 'created_at')->from('users')->where('id', $user_id);
+        $query = \DB::select('username', 'created_at')->from('users')->where('id', $user_id);
         $result = $query->execute()->as_array();
         $data['user'] = $result[0];
         
@@ -29,7 +34,7 @@ class Controller_User extends Controller
             $count = 0; // 初期値を0とする
 
             // 該当日の投稿数を取得する
-            $query = DB::select(DB::expr('COUNT(*) as count'))
+            $query = \DB::select(\DB::expr('COUNT(*) as count'))
             ->from('ramen_posts')
             ->where('user_id', '=', 1)
             ->where('created_at', '=', $current_date)
@@ -43,12 +48,12 @@ class Controller_User extends Controller
             $current_date = date("Y-m-d", strtotime($current_date . " +1 day"));
         }
         $data['records'] = $records;
-        return View::forge('user/index', $data);
+        return \View::forge('user/index', $data);
 	}
 
     public function action_mypage()
     {
-        return View::forge('user/mypage');
+        return \View::forge('user/mypage');
     }
 
 }
