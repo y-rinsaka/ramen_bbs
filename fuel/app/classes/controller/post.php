@@ -9,6 +9,24 @@ class Post extends \Controller
         }
 	}
 
+    public function action_index()
+    {
+        $ramen_posts = \Model\RamenPost::find_all();
+
+        $data = array();
+        $data['title'] = '新規投稿';
+        $data['ramen_posts'] = $ramen_posts;
+        $data['users'] = $this->getUserNames($ramen_posts);
+        foreach ($ramen_posts as &$ramen_post) {
+            if ($ramen_post->comment) {
+                $ramen_post->comment = $this->truncateComment($ramen_post->comment, 10);
+            }
+
+        }
+        return \View::forge('post/top',$data);
+
+    }
+    
     public function action_create()
     {
         $data = array();
@@ -63,7 +81,7 @@ class Post extends \Controller
                 \Session::set_flash('success', '投稿が正常に保存されました');
 
                 \Response::redirect('/');
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 // エラーメッセージを表示
                 \Session::set_flash('error', $e->getMessage());
             }
@@ -80,34 +98,36 @@ class Post extends \Controller
         return $uniqueName;
     }
 
-    public function action_index()
-    {
-        $ramen_posts = \Model\RamenPost::find_all();
-
-        $data = array();
-        $data['title'] = '新規投稿';
-        $data['ramen_posts'] = $ramen_posts;
-        $data['users'] = $this->getUserNames($ramen_posts);
-        foreach ($ramen_posts as &$ramen_post) {
-            if ($ramen_post->comment) {
-                $ramen_post->comment = $this->truncateComment($ramen_post->comment, 10);
-            }
-
-        }
-        return \View::forge('post/top',$data);
-
-    }
-
     public function action_view($id)
     {
         $ramen_post = \Model\RamenPost::find_by_pk($id);
         $data['title'] = '詳細';
+        $data['current_user_id'] = \Auth::get('id');
         $data['ramen_post'] = $ramen_post;
 
         $query = \DB::select('username')->from('users')->where('id', $ramen_post->user_id);
         $result = $query->execute()->as_array();
         $data['ramen_post']['username'] = $result[0]['username'];
         return \View::forge('post/view', $data);
+    
+    }
+
+    public function post_delete($id)
+    {
+        try {
+            $post = \Model\RamenPost::find_by_pk($id);
+
+            if ($post) {
+                $post->delete();
+                \Session::set_flash('success', '投稿を削除しました。');
+            } else {
+                \Session::set_flash('error', '該当する投稿が見つかりませんでした。');
+            }
+        } catch (\Exception $e) {
+            \Session::set_flash('error', '投稿の削除中にエラーが発生しました。');
+        }
+
+        \Response::redirect('/');
     }
 
     protected function getUserNames($ramen_posts)

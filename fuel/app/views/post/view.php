@@ -19,8 +19,17 @@
                 <h3><a href="<?php echo Uri::create('user/index/' . $ramen_post->user_id); ?>">@<?php echo $ramen_post->username; ?></a></h3>
                 <p class="card-text"><?php echo $ramen_post->comment ?></p>
                 <p class="card-text">投稿日：<?php echo $ramen_post->created_at ?></p>
+
+            <?php if ($ramen_post->user_id == $current_user_id): ?>
+                <form action="<?php echo Uri::create('post/delete/'.$ramen_post->id); ?>" method="post" >
+                    <input type="hidden" name="<?php echo Config::get('security.csrf_token_key'); ?>" value="<?php echo Security::fetch_token(); ?>">
+                    <input type="submit" value="削除" class="btn btn-danger">
+                </form>
+            <?php endif; ?>
+            
             </div>
         </div>
+
     </main>
 </body>
 </html>
