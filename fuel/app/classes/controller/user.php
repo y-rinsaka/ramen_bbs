@@ -11,7 +11,7 @@ class Controller_User extends Controller
         $data['user'] = $result[0];
         
         // そのユーザーの総投稿数
-        $data['user']['ramen_post_count'] = Model_RamenPost::count('id', true, array('user_id'=>$user_id));
+        $data['user']['ramen_post_count'] = \Model\RamenPost::count('id', true, array('user_id'=>$user_id));
 
         // 7日間の記録
         // 直近の一週間の開始日と終了日を取得
