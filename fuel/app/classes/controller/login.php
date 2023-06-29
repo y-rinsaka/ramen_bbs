@@ -1,6 +1,6 @@
 <?php
-
-class Controller_Login extends Controller
+namespace Controller;
+class Login extends \Controller
 {
     public function action_index()
     {
@@ -8,20 +8,20 @@ class Controller_Login extends Controller
         $data['title'] = 'ログイン';
 
         //すでにログイン済であればログイン後のページへリダイレクト
-        Auth::check() and Response::redirect('/');
+        \Auth::check() and \Response::redirect('/');
 
         //エラーメッセージ用変数初期化
         $error = null;
 
         //ログイン用のオブジェクト生成
-        $auth = Auth::instance();
+        $auth = \Auth::instance();
 
         //ログインボタンが押されたら、ユーザ名、パスワードをチェックする
-        if (Input::post()) {
+        if (\Input::post()) {
 
-            if ($auth->login(Input::post('username'), Input::post('password'))) {
+            if ($auth->login(\Input::post('username'), \Input::post('password'))) {
             // ログイン成功時、ログイン後のページへリダイレクト
-            Response::redirect('/');
+            \Response::redirect('/');
 
             }else{
 
@@ -31,7 +31,7 @@ class Controller_Login extends Controller
         }
 
         //ビューテンプレートを呼び出し
-        $view = View::forge('auth/login', $data);
+        $view = \View::forge('auth/login', $data);
 
         //エラーメッセージをビューにセット
         $view->set('error', $error);

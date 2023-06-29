@@ -1,12 +1,13 @@
 <?php
-    class Controller_Logout extends Controller
-    {
+namespace Controller;
+class Logout extends \Controller
+{
     public function action_index()
     {
     //ログイン用のオブジェクト生成
-    $auth = Auth::instance();
+    $auth = \Auth::instance();
     $auth->logout();
-    
-    Response::redirect('/');
-    }
+
+    \Response::redirect('/');
+}
 }
