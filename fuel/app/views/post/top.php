@@ -25,7 +25,7 @@
         <?php if ($ramen_posts): ?>
             <?php foreach ($ramen_posts as $ramen_post): ?>
                 <div class="card">
-                    <img src="<?php echo $ramen_post->image; ?>" class="card-img-top">
+                    <img src="<?php echo $ramen_post->image; ?>" class="img-200-150">
                     
                     <div class="card-body">
                         <h2 class="card-title"><?php echo $ramen_post->shop_name; ?></h5>

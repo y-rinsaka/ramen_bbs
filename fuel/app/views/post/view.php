@@ -12,7 +12,7 @@
     <script src="/assets/dist/app.js" charset="utf-8"></script>
     <main>
         <div class="card">
-            <img src="<?php echo $ramen_post->image; ?>" class="card-img-top">
+            <img src="<?php echo $ramen_post->image; ?>" class="img-200-150">
             
             <div class="card-body">
                 <h2 class="card-title"><?php echo $ramen_post->shop_name; ?><a href=<?php echo $ramen_post->shop_url; ?>><?php echo Asset::img('external-link.png', array('class' => 'card-img-external-link')); ?></a></h5>
