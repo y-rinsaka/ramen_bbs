@@ -74,3 +74,11 @@ h1 {
     font-size: 16px;
     border: 1px solid black;
 }
+
+.display-flex {
+    display: flex;
+}
+
+.content-center {
+    justify-content: center;
+}
