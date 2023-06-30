@@ -82,3 +82,7 @@ h1 {
 .content-center {
     justify-content: center;
 }
+
+.align-center {
+    text-align: center;
+}

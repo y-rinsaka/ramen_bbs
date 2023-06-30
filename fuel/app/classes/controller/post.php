@@ -23,6 +23,8 @@ class Post extends \Controller
             }
 
         }
+        \Debug::dump($ramen_posts);
+        \Debug::dump($data['users']);
         return \View::forge('post/top',$data);
 
     }
