@@ -1,3 +1,4 @@
+<?php require APPPATH . 'classes/prefectures.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,8 +29,10 @@
                     <img src="<?php echo $ramen_post->image; ?>" class="img-200-150">
                     
                     <div class="card-body">
-                        <h2 class="card-title"><?php echo $ramen_post->shop_name; ?></h5>
+                        <h2 class="card-title"><?php echo $ramen_post->shop_name; ?></h2>
+                        <h3><?php echo $prefectures[$ramen_post->prefecture_id]?></h3>
                         <h3>@<?php echo $users[$ramen_post->user_id]; ?></h3>
+                        
                         <p class="card-text"></p><?php echo $ramen_post->comment ?></p>
                         <a href="<?php echo Uri::create('post/view/' . $ramen_post->id); ?>" class="btn btn-primary">詳細</a>
                     </div>

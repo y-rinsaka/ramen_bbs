@@ -5,7 +5,7 @@ function ViewModel() {
         self.inputPassword = ko.observable('');
         self.inputEmail = ko.observable('');
 
-        self.canSubmitinput = ko.computed(function () {
+        self.canSubmitLogin = ko.computed(function () {
             return (self.inputUsername().length > 0)&&(self.inputPassword().length > 0) ;
         });
         self.canSubmitRegister = ko.computed(function () {
