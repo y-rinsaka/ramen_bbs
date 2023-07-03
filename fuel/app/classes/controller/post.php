@@ -14,17 +14,18 @@ class Post extends \Controller
         $ramen_posts = \Model\RamenPost::find_all();
 
         $data = array();
-        $data['title'] = '新規投稿';
+        $data['title'] = '最新の投稿';
         $data['ramen_posts'] = $ramen_posts;
         $data['users'] = $this->getUserNames($ramen_posts);
+        $ramen_posts_array = array();
         foreach ($ramen_posts as &$ramen_post) {
+            $ramen_posts_array[] = $ramen_post->to_array();
             if ($ramen_post->comment) {
                 $ramen_post->comment = $this->truncateComment($ramen_post->comment, 10);
             }
-
         }
-        \Debug::dump($ramen_posts);
-        \Debug::dump($data['users']);
+        $json_ramen_posts = json_encode($ramen_posts_array);
+        $data['json_ramen_posts'] = $json_ramen_posts;
         return \View::forge('post/top',$data);
 
     }
@@ -219,7 +220,6 @@ class Post extends \Controller
         } else {
             $truncated = $comment;
         }
-    
         return $truncated;
     }
 }
