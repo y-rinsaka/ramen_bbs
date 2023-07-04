@@ -16,11 +16,11 @@
         <div class="container">
             <div class="row">
                     <?php echo Form::open(['action' => 'register/index', 'method' => 'post', 'class' => 'form-horizontal']); ?>
-                    <?php if (isset($error)): ?>
-                    <p class="alert alert-warning">
-                        <?php echo $error ?>
-                    </p>
-                    <?php endif ?>
+                    <?php if (Session::get_flash('error')): ?>
+                        <div class="alert alert-warning">
+                            <?php echo Session::get_flash('error'); ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="text-center">
                         <div class="form-group">
                                 <?php echo Form::input('username', null, ['id' => 'username', 'placeholder' => 'ユーザ名', 'data-bind' => "value: inputUsername, valueUpdate: 'afterkeydown'"]); ?>
