@@ -12,6 +12,9 @@
     <title><?php echo $title; ?></title>
 </head>
 <body>
+    <div id="js-loader" class="loader"></div>
+    <?php echo Asset::js('loader.js'); ?>
+
     <div id="react-header"></div>
     
     <main>
