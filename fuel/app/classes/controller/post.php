@@ -32,7 +32,7 @@ class Post extends \Controller
         }
         $json_latest_20_ramen_posts = json_encode($latest_20_ramen_posts_array);
         $data['json_latest_20_ramen_posts'] = $json_latest_20_ramen_posts;
-        return \View::forge('post/top',$data);
+        return \View::forge('post/index',$data);
 
     }
     
