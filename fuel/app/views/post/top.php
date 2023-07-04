@@ -54,7 +54,7 @@
         function RamenViewModel() {
             var self = this;
             // モデルから取得したjson_dataの整形
-            var json_data = '<?php echo htmlspecialchars_decode($json_ramen_posts); ?>';
+            var json_data = '<?php echo htmlspecialchars_decode($json_latest_20_ramen_posts); ?>';
             var clean_json_data = json_data.replace(/[\u0000-\u0019]+/g, "");
             var data_array = JSON.parse(clean_json_data);
 
