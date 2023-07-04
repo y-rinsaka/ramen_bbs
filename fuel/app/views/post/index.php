@@ -12,8 +12,8 @@
     <title><?php echo $title; ?></title>
 </head>
 <body>
-    <div id="root"></div>
-    <script src="/assets/dist/app.js" charset="utf-8"></script>
+    <div id="react-header"></div>
+    
     <main>
         <?php if (Session::get_flash('success')): ?>
             <div class="alert alert-success">
@@ -49,6 +49,12 @@
             </a>
         </p>
     </main>
+    <script>
+        // 埋め込んだ変数をJavaScriptに渡す
+        var current_user_id = <?php echo json_encode($current_user_id); ?>;
+
+    </script>
+    <script src="/assets/dist/app.js" charset="utf-8"></script>
     <script>
         // Knockout.js ViewModel
         function RamenViewModel() {

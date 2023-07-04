@@ -23,7 +23,6 @@ class User extends \Controller
         $start_date = strtotime('-1 week');
         $endDate = time();
 
-
         $target_date = date("n/j"); // 今日の日付
         $start_date = date("Y-m-d", strtotime($target_date . " -6 day")); // 開始日（今日から6日前）
         $current_date = $start_date;
@@ -48,6 +47,8 @@ class User extends \Controller
             $current_date = date("Y-m-d", strtotime($current_date . " +1 day"));
         }
         $data['records'] = $records;
+        $data['current_user_id'] = \Auth::get('id');
+        
         return \View::forge('user/index', $data);
 	}
 

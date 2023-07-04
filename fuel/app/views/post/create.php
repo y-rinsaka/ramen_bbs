@@ -9,7 +9,7 @@
     <title><?php echo $title; ?></title>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="react-header"></div>
     <script src="/assets/dist/app.js" charset="utf-8"></script>
     <main>
         <form method="POST" action="/post/save" enctype="multipart/form-data">
@@ -44,7 +44,13 @@
             <input type="submit" value="投稿する" />
 
         </form>
+        
     </main>
+    <script>
+        // 埋め込んだ変数をJavaScriptに渡す
+        var current_user_id = <?php echo json_encode($current_user_id); ?>;
 
+    </script>
+    <script src="/assets/dist/app.js" charset="utf-8"></script>
 </body>
 </html>

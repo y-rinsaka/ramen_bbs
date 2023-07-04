@@ -21,6 +21,7 @@ class Post extends \Controller
 
         $data = array();
         $data['title'] = '最新の投稿(20件)';
+        $data['current_user_id'] = \Auth::get('id');
         $data['latest_20_ramen_posts'] = $latest_20_ramen_posts;
         $data['users'] = $this->getUserNames($latest_20_ramen_posts);
         $latest_20_ramen_posts_array = array();
@@ -40,6 +41,7 @@ class Post extends \Controller
     {
         $data = array();
         $data['title'] = "投稿する";
+        $data['current_user_id'] = \Auth::get('id');
         return \View::forge('post/create', $data);
     }
 
@@ -83,8 +85,6 @@ class Post extends \Controller
     public function action_detail($id)
     {
         $data['title'] = '詳細';
-
-        // ログインユーザーのIDを取得し、投稿のユーザーIDと一致したものだけが編集・削除できるようにする
         $data['current_user_id'] = \Auth::get('id');
 
         $ramen_post = \Model\RamenPost::find_by_pk($id);
@@ -103,7 +103,7 @@ class Post extends \Controller
         $data['ramen_post'] = $ramen_post;
 
         $data['title'] = "編集する";
-
+        $data['current_user_id'] = \Auth::get('id');
         // 自分のPostであるか確認
         if ($ramen_post && $ramen_post->user_id == \Auth::get('id')) {
             // 編集フォームを表示するビューを返す
