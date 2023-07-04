@@ -86,3 +86,39 @@ h1 {
 .align-center {
     text-align: center;
 }
+
+.margin-0-30per {
+    margin: 0 30%;
+}
+
+.loader {
+    align-items: center;
+    background: #fff;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 999;
+  }
+  .loader::after {
+    animation: loader 0.5s linear infinite;
+    border: 1px solid #6bb6ff; /* 丸の色の指定 */
+    border-radius: 50%;
+    border-right: 1px solid rgba(200, 228, 255, 0.2); /* 丸のサブ色の指定 */
+    border-top: 1px solid rgba(200, 228, 255, 0.2); /* 丸のサブ色の指定 */
+    content: "";
+    height: 100px; /* 丸のサイズ */
+    width: 100px; /* 丸のサイズ */
+  }
+  
+  @keyframes loader {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

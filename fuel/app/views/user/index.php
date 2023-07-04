@@ -9,7 +9,6 @@
 </head>
 <body>
 	<div id="react-header"></div>
-    <script src="/assets/dist/app.js" charset="utf-8"></script>
 	<main>
 		<div class="card" style="width: 72rem;">
 			<div class="card-body">

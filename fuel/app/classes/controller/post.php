@@ -59,7 +59,6 @@ class Post extends \Controller
             // 画像のアップロード
             $image = \Input::file('image');
             $imagePath = $this->uploadImage($image);
-
             $form['image'] = $imagePath;
             // 新しいPostモデルインスタンスを作成し、値を設定
             $ramen_post = \Model\RamenPost::forge(); //Model_RamenPostクラスのオブジェクトを作成
@@ -85,6 +84,7 @@ class Post extends \Controller
     public function action_detail($id)
     {
         $data['title'] = '詳細';
+        // ログインユーザーのIDを取得し、投稿のユーザーIDと一致したものだけが編集・削除できるようにする
         $data['current_user_id'] = \Auth::get('id');
 
         $ramen_post = \Model\RamenPost::find_by_pk($id);
@@ -101,9 +101,9 @@ class Post extends \Controller
         // 編集対象のPostを取得
         $ramen_post = \Model\RamenPost::find_by_pk($id);
         $data['ramen_post'] = $ramen_post;
-
-        $data['title'] = "編集する";
         $data['current_user_id'] = \Auth::get('id');
+        $data['title'] = "編集する";
+
         // 自分のPostであるか確認
         if ($ramen_post && $ramen_post->user_id == \Auth::get('id')) {
             // 編集フォームを表示するビューを返す
