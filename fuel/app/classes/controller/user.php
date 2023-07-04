@@ -51,10 +51,4 @@ class User extends \Controller
         
         return \View::forge('user/index', $data);
 	}
-
-    public function action_mypage()
-    {
-        return \View::forge('user/mypage');
-    }
-
 }
