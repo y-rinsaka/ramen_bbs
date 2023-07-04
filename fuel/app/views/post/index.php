@@ -34,7 +34,7 @@
         <div data-bind="foreach: ramenPosts">
             <div class="card" data-bind="visible: $parent.filterByPrefecture($data.prefecture_id)">
                 <h2 class="card-title" data-bind="text: shop_name"></h2>
-                <img data-bind="attr: { src: image }" class="img-200-150">
+                <img data-bind="attr: { src: image }" class="img-200-150" alt="容量オーバーのため表示できません">
                 <div class="card-body">
                     <h3 data-bind="text: $parent.prefectures[$data.prefecture_id]"></h3>
                     <h3>@<span data-bind="text: $parent.users[$data.user_id]"></span></h3>
