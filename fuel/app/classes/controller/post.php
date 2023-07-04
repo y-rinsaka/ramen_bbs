@@ -32,7 +32,7 @@ class Post extends \Controller
         }
         $json_latest_20_ramen_posts = json_encode($latest_20_ramen_posts_array);
         $data['json_latest_20_ramen_posts'] = $json_latest_20_ramen_posts;
-        return \View::forge('post/top',$data);
+        return \View::forge('post/index',$data);
 
     }
     
@@ -80,7 +80,7 @@ class Post extends \Controller
         \Response::redirect('post');
     }
 
-    public function action_view($id)
+    public function action_detail($id)
     {
         $data['title'] = '詳細';
 
@@ -92,7 +92,7 @@ class Post extends \Controller
         $query = \DB::select('username')->from('users')->where('id', $ramen_post->user_id);
         $result = $query->execute()->as_array();
         $data['ramen_post']['username'] = $result[0]['username'];
-        return \View::forge('post/view', $data);
+        return \View::forge('post/detail', $data);
 
     }
 
