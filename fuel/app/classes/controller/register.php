@@ -11,7 +11,6 @@ public function action_index()
       || empty(\Input::post('email'))
     )
     {
-      \Session::set_flash('error', '入力は全て必須です');
       $data["subnav"] = array('register'=> 'active' );
       $view = \View::forge('auth/register', $data);
       return $view;
@@ -25,7 +24,8 @@ public function action_index()
         
       );
     } catch (\Exception $e) {
-      \Session::set_flash('error', 'そのユーザーは登録できません');
+
+      \Session::set_flash('error', 'ユーザ名/メールアドレスがすでに使用されているか、メールアドレスが正しくありません。');
       $data["subnav"] = array('register'=> 'active' );
       $view = \View::forge('auth/register', $data);
       return $view;
