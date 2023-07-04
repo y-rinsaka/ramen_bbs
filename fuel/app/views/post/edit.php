@@ -9,7 +9,7 @@
     <title><?php echo $title; ?></title>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="react-header"></div>
     <script src="/assets/dist/app.js" charset="utf-8"></script>
     <main>
         <form method="POST" action="<?php echo Uri::create('post/update/'.$ramen_post->id); ?>" enctype="multipart/form-data">
@@ -42,8 +42,13 @@
             <img src="<?php echo $ramen_post->image?>" class="img-200-150">
             <br>
             <input type="submit" value="投稿する" />
-
         </form>
+        <script>
+            // 埋め込んだ変数をJavaScriptに渡す
+            var current_user_id = <?php echo json_encode($current_user_id); ?>;
+
+        </script>
+        <script src="/assets/dist/app.js" charset="utf-8"></script>
     </main>
 
 </body>

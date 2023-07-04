@@ -8,7 +8,7 @@
 	<title><?php echo $user['username']; ?></title>
 </head>
 <body>
-	<div id="root"></div>
+	<div id="react-header"></div>
     <script src="/assets/dist/app.js" charset="utf-8"></script>
 	<main>
 		<div class="card" style="width: 72rem;">
@@ -31,5 +31,11 @@
 			?>
 		</div>
 	</main>
+	<script>
+        // 埋め込んだ変数をJavaScriptに渡す
+        var current_user_id = <?php echo json_encode($current_user_id); ?>;
+
+    </script>
+    <script src="/assets/dist/app.js" charset="utf-8"></script>
 </body>
 </html>

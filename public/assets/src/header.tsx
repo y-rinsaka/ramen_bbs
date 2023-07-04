@@ -9,11 +9,13 @@ import Link from '@mui/material/Link';
 
 interface HeaderProps {
   title: string;
+  current_user_id: string;
 }
 
 
 export default function Header(props: HeaderProps) {
   const { title } = props;
+  const { current_user_id } = props;
 
   return (
     <React.Fragment>
@@ -31,7 +33,7 @@ export default function Header(props: HeaderProps) {
         <IconButton href="/post/create">
           <AddIcon color="primary"/>
         </IconButton>
-        <IconButton href="/user/mypage">
+        <IconButton href={`/user/index/${current_user_id}`}>
           <AccountCircleIcon color="primary"/>
         </IconButton>
         <IconButton href="/logout">
