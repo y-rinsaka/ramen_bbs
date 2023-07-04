@@ -35,7 +35,7 @@ class User extends \Controller
             // 該当日の投稿数を取得する
             $query = \DB::select(\DB::expr('COUNT(*) as count'))
             ->from('ramen_posts')
-            ->where('user_id', '=', 1)
+            ->where('user_id', '=', $user_id)
             ->where('created_at', '=', $current_date)
             ->execute();
 
