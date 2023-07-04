@@ -66,7 +66,7 @@
 
             // 投稿詳細ページへのリンクを生成するメソッド
             self.createPostLink = function(postId) {
-                return '/post/view/' + postId;
+                return '/post/detail/' + postId;
             };
 
             // 都道府県で絞り込みを行う関数
