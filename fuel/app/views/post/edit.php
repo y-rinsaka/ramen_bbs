@@ -12,7 +12,7 @@
     <div id="react-header"></div>
     <main>
         <h1 class="align-center"><?php echo $title; ?></h1>
-        <form method="POST" action="<?php echo Uri::create('post/update/'.$ramen_post->id); ?>" enctype="multipart/form-data" class="margin-0-10">
+        <form method="POST" action="<?php echo Uri::create('post/update/'.$ramen_post->id); ?>" enctype="multipart/form-data" class="margin-0-30per">
             <div class="form-group">
                 <label for="shop_name" class="control-label">店名</label>
                 <input type="text" name="shop_name" id="shop_name" class="form-control" value="<?php echo $ramen_post->shop_name;?>" required>
