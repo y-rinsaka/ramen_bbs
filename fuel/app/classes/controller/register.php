@@ -2,7 +2,7 @@
 namespace Controller;
 class Register extends \Controller
 {
-public function action_index()
+  public function action_index()
   {
     $data["title"] = "新規登録";
     if (
