@@ -29,12 +29,10 @@ class Welcome extends \Controller
    * @return  Response
    */
   public function before() {
-
     // 未ログイン時、ログインページへリダイレクト
     if (!\Auth::check()) {
     
       \Response::redirect('/login');
-    
     }
     
   }

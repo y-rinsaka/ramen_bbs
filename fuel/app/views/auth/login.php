@@ -14,6 +14,7 @@
         <h1><?php echo $title; ?></h1>
     </header>
   <main>
+		<h1 class="text-center">Ramen BBS</h1>
     <div class="container">
       <div class="row text-center">
         <?php echo Form::open(array('class' => 'form-horizontal'));?>

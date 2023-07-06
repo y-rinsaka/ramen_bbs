@@ -13,6 +13,7 @@
     <h1><?php echo $title; ?></h1>
   </header>
   <main>
+    <h1 class="text-center">Ramen BBS</h1>
     <div class="container">
       <div class="row">
           <?php echo Form::open(['action' => 'register/index', 'method' => 'post', 'class' => 'form-horizontal']); ?>

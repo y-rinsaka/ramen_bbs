@@ -11,7 +11,7 @@ class Register extends \Controller
       || empty(\Input::post('email'))
     )
     {
-      $data["subnav"] = array('register'=> 'active' );
+      $data["subnav"] = array('register'=> 'active');
       $view = \View::forge('auth/register', $data);
       return $view;
     }
@@ -21,12 +21,10 @@ class Register extends \Controller
         \Input::post('username'),
         \Input::post('password'),
         \Input::post('email'),
-        
       );
     } catch (\Exception $e) {
-
       \Session::set_flash('error', 'ユーザ名/メールアドレスがすでに使用されているか、メールアドレスが正しくありません。');
-      $data["subnav"] = array('register'=> 'active' );
+      $data["subnav"] = array('register'=> 'active');
       $view = \View::forge('auth/register', $data);
       return $view;
     }

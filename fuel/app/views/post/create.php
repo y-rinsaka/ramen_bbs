@@ -11,7 +11,7 @@
 <body>
   <div id="react-header"></div>
   <main>
-    <h1 class="align-center"><?php echo $title; ?></h1>
+    <h1 class="text-center"><?php echo $title; ?></h1>
     <form method="POST" action="<?php echo Uri::create('/post/save'); ?>" enctype="multipart/form-data" class="margin-0-30per">
       <div class="form-group">
         <label for="shop_name" class="control-label">店名</label>

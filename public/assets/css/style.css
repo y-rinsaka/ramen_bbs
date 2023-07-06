@@ -78,10 +78,6 @@ h1 {
   justify-content: center;
 }
 
-.align-center {
-  text-align: center;
-}
-
 .margin-0-30per {
   margin: 0 30%;
 }
@@ -89,6 +85,7 @@ h1 {
 .w-72rem {
   width: 72rem;
 }
+
 .loader {
   align-items: center;
   background: #fff;

@@ -28,7 +28,7 @@
         <?php echo Session::get_flash('error'); ?>
       </div>
     <?php endif; ?>
-    <h1 class="align-center"><?php echo $title; ?></h1>
+    <h1 class="text-center"><?php echo $title; ?></h1>
     <div class="container">
       <select class="form-center"  data-bind="options: Object.entries(prefectures), optionsText: '1', optionsValue: '0', value: selectedPrefecture, optionsCaption: 'すべての都道府県'">
       </select>
