@@ -10,7 +10,7 @@
 <body>
   <div id="react-header"></div>
   <main>
-    <div class="card" style="width: 72rem;">
+    <div class="card w-72rem">
       <div class="card-body">
         <h1 class="card-title">@<?php echo $user['username']; ?>さんのプロフィール</h1>
         <h2 class="card-subtitle mb-2 text-muted">投稿数（食べた杯数）：<?php echo $user['ramen_post_count']?></h2>
@@ -22,9 +22,9 @@
       <?php
       foreach ($records as $date => $count) {
         if ($count == 0) {
-          echo '<div class="cell-gray">' . $date . '</div>';
+          echo '<div class="cell bg-ccc">' . $date . '</div>';
         } else {
-          echo '<div class="cell-green">' . $date . '</div>';
+          echo '<div class="cell bg-green">' . $date . '</div>';
         }
       }
       ?>

@@ -1,124 +1,122 @@
 header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
 }
 
 main {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 h1 {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 .link-to-post {
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
 }
- 
+
 .link-to-post a {
-    display: block;
-    text-decoration: none;
+  display: block;
+  text-decoration: none;
 }
- 
+
 .link-to-post:hover {
-    opacity: 0.85 ;
+  opacity: 0.85 ;
 }
 
 .card {
-    width: 36rem;
-    margin: 20px auto; /* ページの中央に寄せるためのマージン */
-    border: 1px solid #ccc; /* 枠線のスタイル */
-    padding: 10px; /* カードの内側の余白 */
-    text-align: center;
+  width: 36rem;
+  margin: 20px auto; /* ページの中央に寄せるためのマージン */
+  border: 1px solid #ccc; /* 枠線のスタイル */
+  padding: 10px; /* カードの内側の余白 */
+  text-align: center;
 }
 
 .img-200-150 {
-    width: 200px;
-    height: 150px;
+  width: 200px;
+  height: 150px;
 }
 
 .card-img-external-link {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
-  
-.cell-gray {
-    flex: 0.1;
-    aspect-ratio: 1/1;
-    background-color: #ccc;
-    color: white;
-    display: flex;
-    align-items: flex-start;
-    justify-content: left;
-    font-size: 16px;
-    border: 1px solid black;
+
+.cell {
+  flex: 0.1;
+  aspect-ratio: 1/1;
+  color: white;
+  display: flex;
+  align-items: flex-start;
+  justify-content: left;
+  font-size: 16px;
+  border: 1px solid black;
 }
-  
-.cell-green {
-    flex: 0.1;
-    aspect-ratio: 1/1;
-    background-color: green;
-    color: white;
-    display: flex;
-    align-items: flex-start;
-    justify-content: left;
-    font-size: 16px;
-    border: 1px solid black;
+
+.bg-ccc {
+  background-color: #ccc;
+}
+
+.bg-green {
+  background-color: green;
 }
 
 .display-flex {
-    display: flex;
+  display: flex;
 }
 
 .content-center {
-    justify-content: center;
+  justify-content: center;
 }
 
 .align-center {
-    text-align: center;
+  text-align: center;
 }
 
 .margin-0-30per {
-    margin: 0 30%;
+  margin: 0 30%;
 }
 
+.w-72rem {
+  width: 72rem;
+}
 .loader {
-    align-items: center;
-    background: #fff;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 999;
+  align-items: center;
+  background: #fff;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+.loader::after {
+  animation: loader 0.5s linear infinite;
+  border: 1px solid #6bb6ff; /* 丸の色の指定 */
+  border-radius: 50%;
+  border-right: 1px solid rgba(200, 228, 255, 0.2); /* 丸のサブ色の指定 */
+  border-top: 1px solid rgba(200, 228, 255, 0.2); /* 丸のサブ色の指定 */
+  content: "";
+  height: 100px; /* 丸のサイズ */
+  width: 100px; /* 丸のサイズ */
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0);
   }
-  .loader::after {
-    animation: loader 0.5s linear infinite;
-    border: 1px solid #6bb6ff; /* 丸の色の指定 */
-    border-radius: 50%;
-    border-right: 1px solid rgba(200, 228, 255, 0.2); /* 丸のサブ色の指定 */
-    border-top: 1px solid rgba(200, 228, 255, 0.2); /* 丸のサブ色の指定 */
-    content: "";
-    height: 100px; /* 丸のサイズ */
-    width: 100px; /* 丸のサイズ */
+  100% {
+    transform: rotate(360deg);
   }
-  
-  @keyframes loader {
-    0% {
-      transform: rotate(0);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+}
