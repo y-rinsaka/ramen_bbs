@@ -29,4 +29,8 @@ desktop.ini
 
 # dynamically generated files
 /fuel/app/logs/*/*/*
+<<<<<<< HEAD
 /fuel/app/cache/*/*
+=======
+/fuel/app/cache/*/*
+>>>>>>> accf0bd462594857034dcca87b109a34baacc7fc

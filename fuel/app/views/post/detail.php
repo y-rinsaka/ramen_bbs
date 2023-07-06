@@ -12,8 +12,6 @@
     <div id="react-header"></div>
     <main>
     <div class="card">
-        
-        
         <div class="card-body">
             <h2 class="card-title"><?php echo $ramen_post->shop_name; ?><a href="<?php echo $ramen_post->shop_url; ?>"><?php echo Asset::img('external-link.png', array('class' => 'card-img-external-link')); ?></a></h2>
             <img src="<?php echo $ramen_post->image; ?>" class="img-200-150" alt="容量オーバーのため表示できません">
@@ -37,7 +35,6 @@
     </div>
     </main>
     <script>
-        // 埋め込んだ変数をJavaScriptに渡す
         var current_user_id = <?php echo json_encode($current_user_id); ?>;
 
     </script>
