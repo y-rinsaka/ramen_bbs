@@ -36,6 +36,6 @@
       </div>
     </div>
   </main>
-  <?php echo Asset::js('knockout-script.js'); ?>
+  <?php echo Asset::js('knockout-isinput.js'); ?>
 </body>
 </html>
