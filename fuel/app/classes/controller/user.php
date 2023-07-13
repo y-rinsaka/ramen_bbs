@@ -12,8 +12,7 @@ class User extends \Controller
 	public function action_index($user_id)
 	{  
     // user_id に対応するユーザー情報の取得
-    $query = \DB::select('username', 'created_at')->from('users')->where('id', $user_id);
-    $result = $query->execute()->as_array();
+    $result = \Model\User::get_user_information($user_id);
     $data['user'] = $result[0];
     
     // そのユーザーの総投稿数
@@ -34,14 +33,8 @@ class User extends \Controller
       $count = 0; // 初期値を0とする
 
       // 該当日の投稿数を取得する
-      $query = \DB::select(\DB::expr('COUNT(*) as count'))
-      ->from('ramen_posts')
-      ->where('user_id', '=', $user_id)
-      ->where('created_at', '=', $current_date)
-      ->execute();
+      $count = \Model\User::get_day_count($user_id, $current_date);
 
-      // 取得した投稿数を個数として連想配列に格納する
-      $count = (int) $query->get('count', 0);
       $records[$date] = $count;
 
       $current_date = date("Y-m-d", strtotime($current_date . " +1 day"));

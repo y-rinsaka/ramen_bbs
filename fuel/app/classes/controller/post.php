@@ -199,8 +199,7 @@ private function uploadImage($image)
   protected function getUserNames($ramen_posts)
   {
     $userIds = array_column($ramen_posts, 'user_id');
-    $query = \DB::select('id', 'username')->from('users')->where('id', 'IN', $userIds)->execute();
-    $result = $query->as_array();
+    $result = \Model\User::get_usernames($userIds);
 
     $users = array();
     foreach ($result as $row) {
