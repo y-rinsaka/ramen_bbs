@@ -30,12 +30,12 @@
     <?php endif; ?>
     <h1 class="text-center"><?php echo $title; ?></h1>
     <div class="container">
-      <select class="form-center"  data-bind="options: Object.entries(prefectures), optionsText: '1', optionsValue: '0', value: selectedPrefecture, optionsCaption: 'すべての都道府県'">
+      <select class="form-center"  data-bind="options: Object.entries(prefectures), optionsText: '1', optionsValue: '0', value: selectedPrefecture">
       </select>
     </div>
-
+  <?php echo Input::json('name')?>
     <div data-bind="foreach: ramenPosts">
-      <div class="card" data-bind="visible: $parent.filterByPrefecture($data.prefecture_id)">
+      <div class="card">
         <h2 class="card-title" data-bind="text: shop_name"></h2>
         <img data-bind="attr: { src: image }" class="img-200-150" alt="容量オーバーのため表示できません">
         <div class="card-body">
@@ -56,39 +56,47 @@
     var current_user_id = <?php echo json_encode($current_user_id); ?>;
   </script>
   <script src="/assets/dist/app.js" charset="utf-8"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.5.0.min.js"
+  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+  crossorigin="anonymous"></script>
   <script>
     // Knockout.js ViewModel
     function RamenViewModel() {
       var self = this;
-
-      // モデルから取得したjson_dataの整形
-      var json_data = '<?php echo htmlspecialchars_decode($json_latest_20_ramen_posts); ?>';
-      var clean_json_data = json_data.replace(/[\u0000-\u0019]+/g, "");
-      var data_array = JSON.parse(clean_json_data);
-
-      // データバインディングに使用する変数
-      self.ramenPosts = ko.observableArray(data_array);
-      self.prefectures = <?php echo json_encode($prefectures); ?>;
-      self.users = <?php echo json_encode($users); ?>;
-      self.selectedPrefecture = ko.observable('');
-
+      
       // 投稿詳細ページへのリンクを生成するメソッド
       self.createPostLink = function(postId) {
         return '/post/detail/' + postId;
       };
 
-      // 都道府県で絞り込みを行うメソッド
-      self.filterByPrefecture = function(post_prefecture) {
-        var selected_prefecture_id = self.selectedPrefecture();
-        if (selected_prefecture_id && selected_prefecture_id !='すべての都道府県') {
-          
-          return (post_prefecture === Number(selected_prefecture_id));
-        }
-        return true;
-      };
+      // データバインディングに使用する変数
+      self.prefectures = Object.assign({'0': 'すべての都道府県'}, <?php echo json_encode($prefectures); ?>); // undefinedではなく0にして全投稿表示対応
+      self.users = <?php echo json_encode($users); ?>;
+      self.selectedPrefecture = ko.observable('');
+      self.ramenPosts = ko.observable('');
 
-      self.selectedPrefecture.subscribe(function() {
-        self.filterByPrefecture();
+      this.selectedPrefecture.subscribe(function () {
+        // 選択された都道府県に対応するJSONデータを取得するためのリクエストを送信
+        var data = {
+          prefecture_id: self.selectedPrefecture()
+        }
+        $.ajax({
+          url: '<?php echo Uri::base();?>' + 'test/list.json',
+          type: 'POST',
+          cache: false,
+          contentType: 'application/json',
+          dataType: 'json',
+          data: JSON.stringify(data), // 選択された都道府県を送信
+          success: function (json_data) {
+            self.ramenPosts(json_data); // 取得したJSONデータをramenPostsに設定
+          },
+          error: function () {
+            alert('Server Error. Please try again later.');
+          },
+          complete: function () {
+          }
+        });
       });
     }
 

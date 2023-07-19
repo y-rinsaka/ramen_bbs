@@ -4,7 +4,7 @@ class User extends \Model {
   public static function get_usernames($userIds)
   {
     $query = \DB::select('id', 'username')->from('users')->where('id', 'IN', $userIds)->execute();
-    $result = $wuery->as_array();
+    $result = $query->as_array();
     return $result;
   }
 

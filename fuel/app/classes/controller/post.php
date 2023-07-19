@@ -11,26 +11,25 @@ class Post extends \Controller
 
   public function action_index()
   {
-    $latest_20_ramen_posts = \Model\RamenPost::find(array(
+    $latest_ramen_posts = \Model\RamenPost::find(array(
       'order_by' => array(
           'id' => 'desc',
       ),
-      'limit' => 20
     ));
 
     $data['title'] = "最新の投稿(20件)";
     $data['current_user_id'] = \Auth::get('id');
-    $data['latest_20_ramen_posts'] = $latest_20_ramen_posts;
-    $data['users'] = $this->getUserNames($latest_20_ramen_posts);
-    $latest_20_ramen_posts_array = array();
-    foreach ($latest_20_ramen_posts as $ramen_post) {
+    $data['latest_20_ramen_posts'] = $latest_ramen_posts;
+    $data['users'] = $this->getUserNames($latest_ramen_posts);
+    $latest_ramen_posts_array = array();
+    foreach ($latest_ramen_posts as $ramen_post) {
       if ($ramen_post->comment) {
         $ramen_post->comment = $this->truncateComment($ramen_post->comment, 10);
       }
-      $latest_20_ramen_posts_array[] = $ramen_post->to_array();
+      $latest_ramen_posts_array[] = $ramen_post->to_array();
     }
-    $json_latest_20_ramen_posts = json_encode($latest_20_ramen_posts_array);
-    $data['json_latest_20_ramen_posts'] = $json_latest_20_ramen_posts;
+    $json_latest_ramen_posts = json_encode($latest_ramen_posts_array);
+    $data['json_latest_ramen_posts'] = $json_latest_ramen_posts;
 
     return \View::forge('post/index',$data);
   }
