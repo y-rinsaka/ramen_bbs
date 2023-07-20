@@ -75,14 +75,13 @@
       self.users = <?php echo json_encode($users); ?>;
       self.selectedPrefecture = ko.observable('');
       self.ramenPosts = ko.observable('');
-      console.log(self.users);
       this.selectedPrefecture.subscribe(function () {
         // 選択された都道府県に対応するJSONデータを取得するためのリクエストを送信
         var data = {
           prefecture_id: self.selectedPrefecture()
         }
         $.ajax({
-          url: '<?php echo Uri::base();?>' + 'test/list.json',
+          url: '<?php echo Uri::base();?>' + 'api/ramenposts.json',
           type: 'POST',
           cache: false,
           contentType: 'application/json',

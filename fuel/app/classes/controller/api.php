@@ -1,10 +1,10 @@
 <?php
 namespace Controller;
-class Test extends \Controller_Rest
+class Api extends \Controller_Rest
 {
   protected $default_format = 'json';
 
-  public function post_list()
+  public function post_ramenposts()
   {
     $prefecture_id = \Input::json('prefecture_id');
     if ( $prefecture_id == 0 ) {
