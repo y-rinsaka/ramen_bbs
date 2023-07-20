@@ -11,12 +11,28 @@ class Post extends \Controller
 
   public function action_index()
   {
+    $latest_20_ramen_posts = \Model\RamenPost::find(array(
+      'order_by' => array(
+          'id' => 'desc',
+      ),
+      'limit' => 20
+    ));
 
-    $data['title'] = "最新の投稿（最大20件）";
+    $data['title'] = "最新の投稿(20件)";
     $data['current_user_id'] = \Auth::get('id');
-    $data['users'] = \Model\User::get_usernames();
+    $data['latest_20_ramen_posts'] = $latest_20_ramen_posts;
+    $data['users'] = $this->getUserNames($latest_20_ramen_posts);
+    $latest_20_ramen_posts_array = array();
+    foreach ($latest_20_ramen_posts as $ramen_post) {
+      if ($ramen_post->comment) {
+        $ramen_post->comment = $this->truncateComment($ramen_post->comment, 10);
+      }
+      $latest_20_ramen_posts_array[] = $ramen_post->to_array();
+    }
+    $json_latest_20_ramen_posts = json_encode($latest_20_ramen_posts_array);
+    $data['json_latest_20_ramen_posts'] = $json_latest_20_ramen_posts;
 
-    return \View::forge('post/index', $data);
+    return \View::forge('post/index',$data);
   }
   
   public function action_create()
@@ -63,6 +79,7 @@ class Post extends \Controller
 
     // ログインユーザーのIDを取得し、投稿のユーザーIDと一致したものだけが編集・削除できるようにする
     $data['current_user_id'] = \Auth::get('id');
+
     $ramen_post = \Model\RamenPost::find_by_pk($id);
     $data['ramen_post'] = $ramen_post;
     $query = \DB::select('username')->from('users')->where('id', $ramen_post->user_id);

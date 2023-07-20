@@ -30,17 +30,17 @@
     <?php endif; ?>
     <h1 class="text-center"><?php echo $title; ?></h1>
     <div class="container">
-      <select class="form-center"  data-bind="options: Object.entries(prefectures), optionsText: '1', optionsValue: '0', value: selectedPrefecture">
+      <select class="form-center"  data-bind="options: Object.entries(prefectures), optionsText: '1', optionsValue: '0', value: selectedPrefecture, optionsCaption: 'すべての都道府県'">
       </select>
     </div>
-  <?php echo Input::json('name')?>
+
     <div data-bind="foreach: ramenPosts">
-      <div class="card">
+      <div class="card" data-bind="visible: $parent.filterByPrefecture($data.prefecture_id)">
         <h2 class="card-title" data-bind="text: shop_name"></h2>
         <img data-bind="attr: { src: image }" class="img-200-150" alt="容量オーバーのため表示できません">
         <div class="card-body">
           <h3 data-bind="text: $parent.prefectures[$data.prefecture_id]"></h3>
-          <h3>@<span data-bind="text: $parent.users[$data.user_id]"></span></h3> 
+          <h3>@<span data-bind="text: $parent.users[$data.user_id]"></span></h3>
           <p class="card-text" data-bind="text: comment"></p>
           <a data-bind="attr: { href: $parent.createPostLink($data.id) }" class="btn btn-primary">詳細</a>
         </div>
@@ -56,46 +56,39 @@
     var current_user_id = <?php echo json_encode($current_user_id); ?>;
   </script>
   <script src="/assets/dist/app.js" charset="utf-8"></script>
-  <script
-  src="https://code.jquery.com/jquery-3.5.0.min.js"
-  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
-  crossorigin="anonymous"></script>
   <script>
     // Knockout.js ViewModel
     function RamenViewModel() {
       var self = this;
-      
+
+      // モデルから取得したjson_dataの整形
+      var json_data = '<?php echo htmlspecialchars_decode($json_latest_20_ramen_posts); ?>';
+      var clean_json_data = json_data.replace(/[\u0000-\u0019]+/g, "");
+      var data_array = JSON.parse(clean_json_data);
+
+      // データバインディングに使用する変数
+      self.ramenPosts = ko.observableArray(data_array);
+      self.prefectures = <?php echo json_encode($prefectures); ?>;
+      self.users = <?php echo json_encode($users); ?>;
+      self.selectedPrefecture = ko.observable('');
+
       // 投稿詳細ページへのリンクを生成するメソッド
       self.createPostLink = function(postId) {
         return '/post/detail/' + postId;
       };
 
-      // データバインディングに使用する変数
-      self.prefectures = Object.assign({'0': 'すべての都道府県'}, <?php echo json_encode($prefectures); ?>); // undefinedではなく0にして全投稿表示対応
-      self.users = <?php echo json_encode($users); ?>;
-      self.selectedPrefecture = ko.observable('');
-      self.ramenPosts = ko.observable('');
-      this.selectedPrefecture.subscribe(function () {
-        // 選択された都道府県に対応するJSONデータを取得するためのリクエストを送信
-        var data = {
-          prefecture_id: self.selectedPrefecture()
+      // 都道府県で絞り込みを行うメソッド
+      self.filterByPrefecture = function(post_prefecture) {
+        var selected_prefecture_id = self.selectedPrefecture();
+        if (selected_prefecture_id && selected_prefecture_id !='すべての都道府県') {
+          
+          return (post_prefecture === Number(selected_prefecture_id));
         }
-        $.ajax({
-          url: '<?php echo Uri::base();?>' + 'api/ramenposts.json',
-          type: 'POST',
-          cache: false,
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify(data), // 選択された都道府県を送信
-          success: function (json_data) {
-            self.ramenPosts(json_data); // 取得したJSONデータをramenPostsに設定
-          },
-          error: function () {
-            alert('Server Error. Please try again later.');
-          },
-          complete: function () {
-          }
-        });
+        return true;
+      };
+
+      self.selectedPrefecture.subscribe(function() {
+        self.filterByPrefecture();
       });
     }
 
