@@ -40,7 +40,7 @@
         <img data-bind="attr: { src: image }" class="img-200-150" alt="容量オーバーのため表示できません">
         <div class="card-body">
           <h3 data-bind="text: $parent.prefectures[$data.prefecture_id]"></h3>
-          <h3>@<span data-bind="text: $parent.users[$data.user_id]"></span></h3>
+          <h3>@<span data-bind="text: $parent.users[$data.user_id]"></span></h3> 
           <p class="card-text" data-bind="text: comment"></p>
           <a data-bind="attr: { href: $parent.createPostLink($data.id) }" class="btn btn-primary">詳細</a>
         </div>
@@ -75,7 +75,7 @@
       self.users = <?php echo json_encode($users); ?>;
       self.selectedPrefecture = ko.observable('');
       self.ramenPosts = ko.observable('');
-
+      console.log(self.users);
       this.selectedPrefecture.subscribe(function () {
         // 選択された都道府県に対応するJSONデータを取得するためのリクエストを送信
         var data = {

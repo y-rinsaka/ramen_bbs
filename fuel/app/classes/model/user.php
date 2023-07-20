@@ -1,11 +1,15 @@
 <?php
 namespace Model;
 class User extends \Model {
-  public static function get_usernames($userIds)
+  public static function get_usernames()
   {
-    $query = \DB::select('id', 'username')->from('users')->where('id', 'IN', $userIds)->execute();
+    $query = \DB::select('id', 'username')->from('users')->order_by('id')->execute();
     $result = $query->as_array();
-    return $result;
+    $users = array();
+    foreach ($result as $item) {
+      $users[$item['id']] = $item['username'];
+    }
+    return $users;
   }
 
   public static function get_user_information($user_id)

@@ -3,11 +3,18 @@ namespace Controller;
 class Test extends \Controller_Rest
 {
   protected $default_format = 'json';
-  
+
   public function post_list()
   {
     $prefecture_id = \Input::json('prefecture_id');
-    if ( $prefecture_id != 0 ) {
+    if ( $prefecture_id == 0 ) {
+      $latest_ramen_posts = \Model\RamenPost::find(array(
+        'order_by' => array(
+          'id' => 'desc',
+        ),
+        'limit' => 20,
+      ));
+    } else {
       $latest_ramen_posts = \Model\RamenPost::find(array(
         'where' => array(
           array('prefecture_id', '=', $prefecture_id),
@@ -15,12 +22,7 @@ class Test extends \Controller_Rest
         'order_by' => array(
           'id' => 'desc',
         ),
-      ));
-    } else {
-      $latest_ramen_posts = \Model\RamenPost::find(array(
-        'order_by' => array(
-          'id' => 'desc',
-        ),
+        'limit' => 20,
       ));
     }
 
